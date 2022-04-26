@@ -8,7 +8,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 //@Service
 public interface UserService extends UserDetailsService {
 
-    public void registerUser(User user, boolean isAdmin) throws Exception;
+    public boolean registerUser(User user, boolean isAdmin) throws Exception;
 
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException;
 }

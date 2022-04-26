@@ -2,14 +2,20 @@ package com.diary.DiaryProject.entities;
 
 
 import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.util.List;
 
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
+@Data
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public abstract class User {
 
@@ -19,21 +25,48 @@ public abstract class User {
     public int id;
 
     @Column(name = "name")
+    @NotEmpty
+    @Size(min = 2, message = "Имя не может быть меньше двух знаков")
     public String name;
+
     @Column(name = "secondName")
+    @NotEmpty
+    @Size(min = 2, message = "Фамилия не может быть меньше двух знаков")
     public String secondName;
+
     @Column(name = "patronymic")
+    @NotEmpty
+    @Size(min = 2, message = "Отчество не может быть меньше двух знаков")
     public String patronymic;
+
     @Column(name = "pass")
+    @NotEmpty
+    @Size(min = 2, message = "Пароль не может быть меньше двух знаков")
     public String pass;
+
     @Column(name = "login")
+    @NotEmpty
+    @Size(min = 2, message = "Логин не может быть меньше двух знаков")
     public String login;
+
     @Column(name = "phone")
+    @NotEmpty
+    @Size(min = 11,max = 11,message = "Некорректный формат телефона")
     public String phone;
+
     @Column(name = "address")
+    @NotEmpty
+    @Size(min = 2, message = "Адресс не может быть меньше двух знаков")
     public String address;
+
     @Column(name = "mail")
+    @Email
     public String mail;
+
+    @Transient
+    @NotEmpty
+    @Size(min = 2, message = "Пароль не может быть меньше двух знаков")
+    private String passwordConfirm;
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
     @JoinTable(
@@ -44,97 +77,5 @@ public abstract class User {
                     name = "roleId", referencedColumnName = "id"))
     private List<Role> roles;
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getSecondName() {
-        return secondName;
-    }
-
-    public void setSecondName(String secondName) {
-        this.secondName = secondName;
-    }
-
-    public String getPatronymic() {
-        return patronymic;
-    }
-
-    public void setPatronymic(String patronymic) {
-        this.patronymic = patronymic;
-    }
-
-    public String getPass() {
-        return pass;
-    }
-
-    public void setPass(String pass) {
-        this.pass = pass;
-    }
-
-    public String getLogin() {
-        return login;
-    }
-
-    public void setLogin(String login) {
-        this.login = login;
-    }
-
-    public String getPhone() {
-        return phone;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
-    public String getMail() {
-        return mail;
-    }
-
-    public void setMail(String mail) {
-        this.mail = mail;
-    }
-
-    public List<Role> getRoles() {
-        return roles;
-    }
-
-    public void setRoles(List<Role> roles) {
-        this.roles = roles;
-    }
-
-
-    public User(String name, String secondName, String patronymic, String pass, String login, String phone, String address, String mail) {
-
-        this.name = name;
-        this.secondName = secondName;
-        this.patronymic = patronymic;
-        this.pass = pass;
-        this.login = login;
-        this.phone = phone;
-        this.address = address;
-        this.mail = mail;
-    }
 
 }

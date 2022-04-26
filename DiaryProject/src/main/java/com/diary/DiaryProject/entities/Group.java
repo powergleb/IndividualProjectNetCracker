@@ -1,12 +1,16 @@
 package com.diary.DiaryProject.entities;
 
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.List;
 
 @Entity
 @NoArgsConstructor
+@AllArgsConstructor
+@Getter
+@Setter
+@EqualsAndHashCode
 @Table(name = "groups")
 public class Group {
 
@@ -21,27 +25,4 @@ public class Group {
     @OneToMany(mappedBy = "group")
     private List<Student> students;
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public int getNumberOfGroup() {
-        return numberOfGroup;
-    }
-
-    public void setNumberOfGroup(int numberOfGroup) {
-        this.numberOfGroup = numberOfGroup;
-    }
-
-    public List<Student> getStudents() {
-        return students;
-    }
-
-    public void setStudents(List<Student> students) {
-        this.students = students;
-    }
 }

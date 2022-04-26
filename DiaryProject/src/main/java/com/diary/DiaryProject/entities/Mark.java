@@ -1,5 +1,7 @@
 package com.diary.DiaryProject.entities;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
@@ -7,6 +9,8 @@ import java.util.GregorianCalendar;
 
 @Entity
 @NoArgsConstructor
+@AllArgsConstructor
+@Data
 @Table(name = "marks")
 public class Mark {
 
@@ -14,7 +18,6 @@ public class Mark {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
     public int id;
-
 
     @Column(name = "date")
     private GregorianCalendar date;
@@ -26,35 +29,4 @@ public class Mark {
     @JoinColumn(name = "answerId", referencedColumnName = "id")
     private Answer answer;
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public GregorianCalendar getDate() {
-        return date;
-    }
-
-    public void setDate(GregorianCalendar date) {
-        this.date = date;
-    }
-
-    public Double getValue() {
-        return value;
-    }
-
-    public void setValue(Double value) {
-        this.value = value;
-    }
-
-    public Answer getAnswer() {
-        return answer;
-    }
-
-    public void setAnswer(Answer answer) {
-        this.answer = answer;
-    }
 }

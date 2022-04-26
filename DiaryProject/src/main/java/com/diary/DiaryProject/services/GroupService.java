@@ -8,7 +8,7 @@ import java.util.List;
 @Service
 public interface GroupService {
 
-    Group createGroup(Group group);
+    public Group createGroup(Group group);
 
     public Group readGroup(int id);
 

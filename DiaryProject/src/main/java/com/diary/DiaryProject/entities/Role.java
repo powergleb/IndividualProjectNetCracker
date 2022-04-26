@@ -1,6 +1,8 @@
 package com.diary.DiaryProject.entities;
 
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 
@@ -10,6 +12,8 @@ import java.util.Collection;
 @Entity
 @Table(name = "roles")
 @NoArgsConstructor
+@AllArgsConstructor
+@Data
 public class Role implements GrantedAuthority {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -35,23 +39,8 @@ public class Role implements GrantedAuthority {
         return name;
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
     public void setName(String name) {
         this.name = name;
     }
 
-    public Collection<User> getUsers() {
-        return users;
-    }
-
-    public void setUsers(Collection<User> users) {
-        this.users = users;
-    }
 }

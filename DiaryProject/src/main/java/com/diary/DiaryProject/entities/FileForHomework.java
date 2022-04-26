@@ -1,11 +1,15 @@
 package com.diary.DiaryProject.entities;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
 @Entity
 @NoArgsConstructor
+@AllArgsConstructor
+@Data
 @Table(name = "filesForHomework")
 public class FileForHomework {
 
@@ -21,28 +25,5 @@ public class FileForHomework {
     @JoinColumn(name = "homeworkId")
     private Homework homework;
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getURL() {
-        return URL;
-    }
-
-    public void setURL(String URL) {
-        this.URL = URL;
-    }
-
-    public Homework getHomework() {
-        return homework;
-    }
-
-    public void setHomework(Homework homework) {
-        this.homework = homework;
-    }
 }
 
