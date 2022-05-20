@@ -1,16 +1,21 @@
 package com.diary.DiaryProject.entities;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
+import javax.validation.Valid;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.util.GregorianCalendar;
 
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-@Data
+@Getter
+@Setter
+@EqualsAndHashCode
 @Table(name = "marks")
 public class Mark {
 
@@ -23,7 +28,10 @@ public class Mark {
     private GregorianCalendar date;
 
     @Column(name = "value")
-    private Double value;
+    @Max(value = 100, message = "не может быть больше 100")
+    @Min(value = 0, message = "не может быть меньше 0")
+    @NotNull(message = "Введите оценку")
+    private Integer value;
 
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "answerId", referencedColumnName = "id")

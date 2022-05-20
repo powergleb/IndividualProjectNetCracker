@@ -38,8 +38,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/login", "/registrationBase", "/registrationStudent", "/registrationTeacher").not().fullyAuthenticated()
                 //Доступ только для пользователей с ролью Администратор
                 .antMatchers("/admin/**").hasAuthority("ADMIN")
-                .antMatchers("/news").hasAuthority("USER")
+                .antMatchers("/homeworkViewStudent").hasAuthority("STUDENT")
                 .antMatchers("/addHomework").hasAuthority("TEACHER")
+                .antMatchers("/homeworkListViewTeacher").hasAuthority("TEACHER")
+                .antMatchers("/groupViewTeacher").hasAuthority("TEACHER")
+                .antMatchers("/homeworkListByGroup={id}").hasAuthority("TEACHER")
+                .antMatchers("/homeworkViewTeacher={id}").hasAuthority("TEACHER")
                 //Доступ разрешен всем пользователей
                 .antMatchers("/", "/resources/**").permitAll()
                 //Все остальные страницы требуют аутентификации

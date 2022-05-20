@@ -11,4 +11,5 @@ public interface UserService extends UserDetailsService {
     public boolean registerUser(User user, boolean isAdmin) throws Exception;
 
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException;
+    public User loadUserByUsernameEntity(String username);
 }

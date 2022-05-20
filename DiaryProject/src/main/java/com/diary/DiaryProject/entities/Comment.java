@@ -5,13 +5,14 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
 import java.util.GregorianCalendar;
 
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-@Table(name = "marks")
+@Table(name = "comments")
 public class Comment {
 
     @Id
@@ -23,8 +24,9 @@ public class Comment {
     @Column(name = "date")
     private GregorianCalendar date;
 
-    @Column(name = "value")
-    private Double value;
+    @Column(name = "commentText")
+    @NotEmpty
+    private String commentText;
 
     @ManyToOne(optional = false, cascade = CascadeType.ALL)
     @JoinColumn(name = "answerId")

@@ -66,6 +66,20 @@ public class UserServiceImpl implements UserService {
             return null;
         }
     }
+    public User loadUserByUsernameEntity(String username) {
+        User student = studentRepository.findAll().stream().
+                filter(c -> c.getLogin().equals(username)).findFirst().orElse(null);
+        User teacher = teacherRepository.findAll().stream().
+                filter(c -> c.getLogin().equals(username)).findFirst().orElse(null);
+        if (student != null) {
+            return student;
+        } else if (teacher != null) {
+            return teacher;
+        } else {
+            return null;
+        }
+    }
+
 
     private org.springframework.security.core.userdetails.User toSpringUser(User user) {
         return new org.springframework.security.core.userdetails.User(

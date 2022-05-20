@@ -1,5 +1,6 @@
 package com.diary.DiaryProject.entities;
 
+import com.diary.DiaryProject.entities.intefaces.FileContainer;
 import lombok.*;
 
 import javax.persistence.*;
@@ -11,30 +12,18 @@ import java.util.List;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-@Data
+@Getter
+@Setter
+@EqualsAndHashCode
 @Table(name = "answers")
-public class Answer {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id")
-    private int id;
+public class Answer extends FileContainer {
 
     @ManyToOne
     @JoinColumn(name = "studentId", nullable = false)
     private Student student;
 
-    @OneToMany(mappedBy = "answer")
-    private List<FileForAnswer> filesForAnswer;
-
-    @Column(name = "date")
-    private GregorianCalendar date;
-
-    @Column(name = "taskText")
-    private String taskText;
-
     @OneToOne(mappedBy = "answer", cascade = CascadeType.ALL)
     private Mark mark;
-
 
     @OneToMany(mappedBy = "answer")
     private List<Comment> comments;
