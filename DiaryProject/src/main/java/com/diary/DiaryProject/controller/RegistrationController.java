@@ -3,9 +3,8 @@ package com.diary.DiaryProject.controller;
 
 import com.diary.DiaryProject.entities.Student;
 import com.diary.DiaryProject.entities.Teacher;
-
+import com.diary.DiaryProject.services.GroupService;
 import com.diary.DiaryProject.services.UserService;
-import com.diary.DiaryProject.services.impl.GroupServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,7 +22,7 @@ public class RegistrationController {
     private UserService userService;
 
     @Autowired
-    private GroupServiceImpl groupService;
+    private GroupService groupService;
 
     @GetMapping("/registrationStudent")
     public String registrationStudent(Model model) {
@@ -39,7 +38,7 @@ public class RegistrationController {
 
     @PostMapping("/registrationStudent")
     public String addStudent(@ModelAttribute("studentForm") @Valid Student studentForm, BindingResult bindingResult, Model model) throws Exception {
-        if (studentForm.getGroup()==null) {
+        if (studentForm.getGroup() == null) {
             model.addAttribute("groupError", "Вы не выбрали группу");
             model.addAttribute("groupForm", groupService.readAllGroup());
             return "registrationStudent";
@@ -55,7 +54,7 @@ public class RegistrationController {
             return "registrationStudent";
         }
 
-        if (userService.loadUserByUsername(studentForm.getLogin()) != null){
+        if (userService.loadUserByUsername(studentForm.getLogin()) != null) {
             model.addAttribute("loginError", "Пользователь с таким именем уже существует");
             model.addAttribute("groupForm", groupService.readAllGroup());
             return "registrationStudent";
@@ -83,7 +82,7 @@ public class RegistrationController {
             model.addAttribute("passwordError", "Пароли не совпадают");
             return "registrationTeacher";
         }
-        if (userService.loadUserByUsername(teacherForm.getLogin()) != null){
+        if (userService.loadUserByUsername(teacherForm.getLogin()) != null) {
             model.addAttribute("loginError", "Пользователь с таким именем уже существует");
             return "registrationTeacher";
         }

@@ -10,30 +10,32 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
+    <link href="<c:url value="/resources/css/style.css" />" rel="stylesheet">
+    <link href="<c:url value="/resources/css/table.css" />" rel="stylesheet">
     <title>Title</title>
 </head>
 <body>
-<table >
+<h3>
+    Список домашних заданий
+</h3>
+<table class="table">
+    <thead>
     <tr>
-        <th>Список домашних заданий</th>
-    </tr>
-    <tr>
-        <th>Время загрузки</th>
-        <th>Преподаватель</th>
-        <th> </th>
-        <th> </th>
         <th>Описание задания</th>
-        <th> </th>
+        <th>Преподаватель</th>
+        <th>Время загрузки</th>
     </tr>
+    </thead>
+    <tbody>
     <c:forEach var="homework" items="${homeworkList}">
         <tr onclick="window.location.href='/homework=${homework.id}'; return false">
-            <td>${homework.date.getTime()}<td>
-            <td>${homework.teacher.getName()}</td>
-            <td>${homework.teacher.getSecondName()}</td>
-            <td>${homework.teacher.getPatronymic()}</td>
             <td>${homework.taskText}</td>
+            <td>${homework.teacher.getSecondName()} ${homework.teacher.getName()} ${homework.teacher.getPatronymic()}</td>
+            <td>${homework.date.getTime()}</td>
         </tr>
     </c:forEach>
+    </tbody>
+
 </table>
 </body>
 </html>

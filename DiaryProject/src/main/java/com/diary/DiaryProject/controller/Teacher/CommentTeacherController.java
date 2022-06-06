@@ -1,12 +1,12 @@
 package com.diary.DiaryProject.controller.Teacher;
 
+import com.diary.DiaryProject.entities.Answer;
 import com.diary.DiaryProject.entities.Comment;
-import com.diary.DiaryProject.entities.User;
-import com.diary.DiaryProject.services.UserService;
-import com.diary.DiaryProject.services.impl.*;
+import com.diary.DiaryProject.entities.Mark;
+import com.diary.DiaryProject.services.AnswerService;
+import com.diary.DiaryProject.services.CommentService;
+import com.diary.DiaryProject.services.FileService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -15,33 +15,29 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.validation.Valid;
-import java.util.GregorianCalendar;
 
 
 @Controller
 public class CommentTeacherController {
-    @Autowired
-    private HomeworkServiceImpl homeworkService;
-    @Autowired
-    private UserService userService;
 
     @Autowired
-    private AnswerServiceImpl answerService;
+    private CommentService commentService;
+    @Autowired
+    FileService fileService;
+    @Autowired
+    private AnswerService answerService;
 
-    @Autowired
-    private CommentServiceImpl commentService;
-    @Autowired
-    FileServiceImpl fileService;
     @PostMapping("/createCommentTeacher={idAnswer}")
-    public String addComment(@ModelAttribute("commentForm") @Valid Comment commentForm,  @PathVariable("idAnswer") Integer id, BindingResult bindingResult, Model model) throws Exception {
-        commentForm.setAnswer(answerService.readAnswer(id));
-        GregorianCalendar gcalendar = new GregorianCalendar();
-        commentForm.setDate(gcalendar);
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        User cur =  userService.loadUserByUsernameEntity(auth.getName());
-        commentForm.setUser(cur);
-
-        commentService.createComment(commentForm);
-        return "redirect:/answerViewTeacher="+id;
+    public String addComment(@ModelAttribute("commentForm")@Valid Comment commentForm,BindingResult bindingResult, @PathVariable("idAnswer") Integer id, Model model) throws Exception {
+//        if (commentForm.getCommentText()==null) {
+//            model.addAttribute("commentTextError", "комментарий не может быть пустым");
+//            return "redirect:/answerViewTeacher=" + id;
+//        }
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("commentTextError", "комментарий не может быть пустым");
+            return "redirect:/answerViewTeacher=" + id;
+        }
+        commentService.createComment(commentForm, id);
+        return "redirect:/answerViewTeacher=" + id;
     }
 }

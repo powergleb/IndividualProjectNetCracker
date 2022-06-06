@@ -1,52 +1,148 @@
 body {
-    font-family: sans-serif;
+    width: 90%;
+    color:#232323;
+    font-family: 'Open Sans', sans-serif;
+    margin: 0 auto;
+    text-align: center
+}
+hr {
+    border: none;
+    background-color: #e6e6e6;
+    height: 1px;
+    width:90%;
+}
+li {
+    list-style: none;
+}
+text{
+    font-family: 'Open Sans', sans-serif;
 }
 a {
-    color: #369;
+    text-decoration: none;
+    outline: none;
+
 }
-.note {
-    width: 500px;
-    margin: 50px auto;
-    font-size: 1.1em;
-    color: #333;
-    text-align: justify;
+p{
+    text-decoration: none;
+    outline: none;
+    margin: 10px 0;
+    padding: 5px;
+    border: 1px solid #999;
 }
-#drop-area {
-    border: 2px dashed #ccc;
-    border-radius: 20px;
-    width: 480px;
-    margin: 50px auto;
-    padding: 20px;
+a:link {
+    color: #232323;
 }
-#drop-area.highlight {
-    border-color: purple;
+a:visited {
+    color: #232323;
 }
-p {
-    margin-top: 0;
+a:hover {
+    color:DodgerBlue;
 }
-.my-form {
-    margin-bottom: 10px;
+
+button {
+    display:block;
+    width:20%;
+    margin:10px 0;
+    padding:10px;
+    border-radius: 5px 5px 5px 5px;
 }
-#gallery {
-    margin-top: 10px;
+button[type="submit"] {
+    background-color: DodgerBlue;
+    color: white;
+    border: none;
+    height: 40px;
+
 }
-#gallery img {
-    width: 150px;
-    margin-bottom: 10px;
-    margin-right: 10px;
-    vertical-align: middle;
+button[type="submit"]:hover {
+    background-color: rgb(67, 89, 185);
+    transform: scale(1.025);
+
 }
-.button {
-    display: inline-block;
-    padding: 10px;
-    background: #ccc;
+textarea {
+    width:100%;
+    resize: vertical;
+    padding:15px;
+    border-radius:15px;
+    border:0;
+    box-shadow:4px 4px 10px rgba(0,0,0,0.06);
+    height:150px;
+}
+
+
+input {
+    display:block;
+    width:100%;
+    margin:10px 0;
+    padding:10px;
+}
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    /* display: none; <- Crashes Chrome on hover */
+    -webkit-appearance: none;
+    margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
+}
+
+/* The container must be positioned relative: */
+.custom-select {
+    position: relative;
+    font-family: Arial;
+}
+
+.custom-select select {
+    display: none; /*hide original SELECT element: */
+}
+
+.select-selected {
+    background-color: DodgerBlue;
+}
+
+/* Style the arrow inside the select element: */
+.select-selected:after {
+    position: absolute;
+    content: "";
+    top: 14px;
+    right: 10px;
+    width: 0;
+    height: 0;
+    border: 6px solid transparent;
+    border-color: #fff transparent transparent transparent;
+}
+
+/* Point the arrow upwards when the select box is open (active): */
+.select-selected.select-arrow-active:after {
+    border-color: transparent transparent #fff transparent;
+    top: 7px;
+}
+
+/* style the items (options), including the selected item: */
+.select-items div,.select-selected {
+    color: #ffffff;
+    padding: 8px 16px;
+    border: 1px solid transparent;
+    border-color: transparent transparent rgba(0, 0, 0, 0.1) transparent;
     cursor: pointer;
-    border-radius: 5px;
-    border: 1px solid #ccc;
+    border-radius: 5px 5px 5px 5px;
 }
-.button:hover {
-    background: #ddd;
+
+/* Style items (options): */
+.select-items {
+    position: absolute;
+    background-color: DodgerBlue;
+    top: 100%;
+    left: 0;
+    right: 0;
+    z-index: 99;
+    border-radius: 5px 5px 5px 5px;
 }
-#fileElem {
+
+/* Hide the items when the select box is closed: */
+.select-hide {
     display: none;
+}
+
+.select-items div:hover, .same-as-selected {
+    background-color: rgba(0, 0, 0, 0.1);
+}
+.error{
+    color: red;
 }

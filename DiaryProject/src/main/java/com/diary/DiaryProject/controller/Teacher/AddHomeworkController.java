@@ -4,8 +4,10 @@ package com.diary.DiaryProject.controller.Teacher;
 import com.diary.DiaryProject.entities.FileInfo;
 import com.diary.DiaryProject.entities.Homework;
 import com.diary.DiaryProject.entities.Teacher;
+import com.diary.DiaryProject.services.FileService;
+import com.diary.DiaryProject.services.GroupService;
 import com.diary.DiaryProject.services.HomeworkService;
-import com.diary.DiaryProject.services.impl.*;
+import com.diary.DiaryProject.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -24,16 +26,13 @@ import java.util.List;
 @Controller
 public class AddHomeworkController {
     @Autowired
-    FileServiceImpl fileService;
+    FileService fileService;
 
     @Autowired
-    private GroupServiceImpl groupService;
+    private GroupService groupService;
 
     @Autowired
-    private HomeworkServiceImpl homeworkService;
-
-    @Autowired
-    private UserServiceImpl userService;
+    private HomeworkService homeworkService;
 
     @RequestMapping(value = "/addHomework", method = RequestMethod.GET)
     public String provideUploadInfo(Model model) {
@@ -43,33 +42,32 @@ public class AddHomeworkController {
     }
 
     @RequestMapping(value = "/addHomework", method = RequestMethod.POST)
-    public String handleFileUpload(@RequestParam("files") MultipartFile [] files, @Valid Homework homeworkForm, Model model) {
+    public String handleFileUpload(@RequestParam("files") MultipartFile[] files, Homework homeworkForm, Model model) {
         List<FileInfo> fileInfos = new ArrayList<FileInfo>();
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         if (homeworkForm.getGroup() == null) {
             model.addAttribute("groupError", "Вы не выбрали группу");
             model.addAttribute("groupForm", groupService.readAllGroup());
+            model.addAttribute("homeworkForm", new Homework());
             return "addHomework";
         }
-        for(MultipartFile file : files) {
+        for (MultipartFile file : files) {
             if (!file.isEmpty()) {
                 try {
                     fileInfos.add(fileService.upload(file));
-
                 } catch (Exception e) {
-                    model.addAttribute("filesForHomeworkError", "Вам не удалось загрузить  => " + e.getMessage());
+                    model.addAttribute("fileInfoListError", "Вам не удалось загрузить  => " + e.getMessage());
+                    model.addAttribute("groupForm", groupService.readAllGroup());
+                    model.addAttribute("homeworkForm", new Homework());
                     return "addHomework";
                 }
             } else {
-                model.addAttribute("filesForHomeworkError", "Вам не удалось загрузить потому что файл пустой.");
+                model.addAttribute("fileInfoListError", "Вам не удалось загрузить потому что файл пустой.");
+                model.addAttribute("groupForm", groupService.readAllGroup());
+                model.addAttribute("homeworkForm", new Homework());
                 return "addHomework";
             }
         }
-        homeworkForm.setFileInfoList(fileInfos);
-        GregorianCalendar gcalendar = new GregorianCalendar();
-        homeworkForm.setDate(gcalendar);
-        homeworkForm.setTeacher((Teacher) userService.loadUserByUsernameEntity(auth.getName()));
-        homeworkService.createHomework(homeworkForm);
+        homeworkService.createHomework(homeworkForm, fileInfos);
         return "/index";
     }
 }

@@ -12,32 +12,27 @@
 <html>
 <head>
     <title>Title</title>
-    <style type="text/css">
-        TABLE {
-            border: 2px solid black; /* Рамка вокруг таблицы */
-        }
-        TD, TH {
-            border: 2px solid black; /* Рамка вокруг таблицы */
-        }
-        TH {
-            border: 2px solid black; /* Рамка вокруг таблицы */
-        }
-    </style>
+    <link href="<c:url value="/resources/css/style.css" />" rel="stylesheet">
+    <link href="<c:url value="/resources/css/table.css" />" rel="stylesheet">
 </head>
 <body>
-<table>
-        <tfoot>Список домашних заданий группы <c:out value="${group}"/></tfoot>
+<h3>Список домашних заданий группы <c:out value="${group}"/></h3>
+<table class="table">
 
+    <thead>
     <tr>
-        <td>Время загрузки</td>
-        <td>Описание задания</td>
+        <th>Время загрузки</th>
+        <th>Описание задания</th>
     </tr>
+    </thead>
+    <tbody>
     <c:forEach var="homework" items="${homeworkList}">
         <tr onclick="window.location.href='/homeworkViewTeacher=${homework.id}'; return false">
             <td>${homework.date.getTime()}</td>
             <td>${homework.taskText}</td>
         </tr>
     </c:forEach>
+    </tbody>
 </table>
 
 </body>

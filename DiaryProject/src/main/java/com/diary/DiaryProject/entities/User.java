@@ -60,6 +60,7 @@ public abstract class User {
 
     @Column(name = "mail")
     @Email
+    @NotEmpty
     public String mail;
 
     @Transient

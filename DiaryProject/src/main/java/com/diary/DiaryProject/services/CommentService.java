@@ -9,7 +9,7 @@ import java.util.List;
 @Service
 public interface CommentService {
 
-    public Comment createComment(Comment comment);
+    public Comment createComment(Comment comment, int answerID);
 
     public Comment readComment(int id);
 

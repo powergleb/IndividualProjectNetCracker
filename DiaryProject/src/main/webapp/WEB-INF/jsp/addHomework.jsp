@@ -1,4 +1,5 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: groka
@@ -9,9 +10,11 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <head>
     <meta charset="utf-8">
-<%--    <link rel="stylesheet" href="resources/css/style.css">--%>
-<%--    <script src="resources/js/dragdrop.js"></script>--%>
+    <link href="<c:url value="/resources/css/style.css" />" rel="stylesheet">
+    <link href="<c:url value="/resources/css/table.css" />" rel="stylesheet">
+    <script type="text/javascript" src="<c:url value="/resources/js/select.js" />"></script>
 </head>
+<body>
 <%--@elvariable id="homeworkForm" type="com.diary.DiaryProject.entities.Homework"--%>
 <form:form method="POST"
            action="/addHomework"
@@ -20,38 +23,28 @@
     <div>
         <form:textarea type="textarea" path="taskText" placeholder="Описание задания"
                        autofocus="true"></form:textarea>
-        <form:errors path="taskText"></form:errors>
-            ${secondNameError}
+        <form:errors path="taskText" cssClass="error"></form:errors>
+            ${taskTextError}
     </div>
-    <div>
+    <div class="custom-select" style="width:200px;">
         <form:select path="group">
             <form:option value=""> Укажите группу</form:option>
             <form:options items="${groupForm}" itemValue="id" itemLabel="numberOfGroup"></form:options>
         </form:select>
-        <form:errors path="group"></form:errors>
+    </div>
+    <div class="error">
+        <form:errors path="group" cssClass="error"></form:errors>
             ${groupError}
     </div>
     <div>
-        File to upload: <input type="file" name="files" multiple="true">
+        <input type="file" name="files" multiple="true">
     </div>
-
-<%--<div>--%>
-<%--    <div id="drop-area">--%>
-<%--        <form class="my-form">--%>
-<%--            <p>Upload multiple files with the file dialog or by dragging and dropping images onto the dashed region</p>--%>
-<%--            <input type="file" id="fileElem" multiple accept="image/*" onchange="handleFiles(this.files)">--%>
-<%--            <label class="button" for="fileElem">Select some files</label>--%>
-<%--        </form>--%>
-<%--        <progress id="progress-bar" max=100 value=0></progress>--%>
-<%--        <div id="gallery" /></div>--%>
-<%--</div>--%>
-<%--</div>--%>
-
-
-    <div>>
-        <input type="submit" value="submit"> Press here to upload the file!
+    <div class="error">
+        <form:errors path="fileInfoList" cssClass="error"></form:errors>
+            ${fileInfoListError}
     </div>
-    <form:errors path="fileInfoList"></form:errors>
-    ${filesForHomeworkError}
+    <div>
+        <button class="button" type="submit">Загрузить</button>
+    </div>
 </form:form>
-
+</body>

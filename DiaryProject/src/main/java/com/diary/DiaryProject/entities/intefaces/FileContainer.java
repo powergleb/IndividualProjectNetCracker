@@ -22,7 +22,7 @@ public abstract class FileContainer {
     private int id;
 
     @Column(name = "taskText")
-    @NotEmpty( message = "описание не может быть пустым")
+    @NotEmpty(message = "описание не может быть пустым")
     private String taskText;
 
     @Column(name = "date")

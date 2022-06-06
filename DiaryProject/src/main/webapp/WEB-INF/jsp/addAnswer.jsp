@@ -1,4 +1,5 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: groka
@@ -10,6 +11,7 @@
 <html>
 <head>
     <title>Title</title>
+    <link href="<c:url value="/resources/css/style.css" />" rel="stylesheet">
 </head>
 <body>
 <%--@elvariable id="answerForm" type="com.diary.DiaryProject.entities.Answer"--%>
@@ -20,20 +22,17 @@
     <div>
         <form:textarea type="textarea" path="taskText" placeholder="Описание ответа"
                        autofocus="true"></form:textarea>
-        <form:errors path="taskText"></form:errors>
+        <form:errors path="taskText" cssClass="error"></form:errors>
             ${taskTextError}
     </div>
     <div>
-        File to upload: <input type="file" name="files" multiple="true">
+        <input type="file" name="files" multiple="true">
     </div>
-
-
-
-    <div>>
-        <input type="submit" value="submit"> Press here to upload the file!
+    <div>
+        <button class="button" type="submit">Загрузить</button>
     </div>
-    <form:errors path="fileInfoList"></form:errors>
-    ${filesForAnswerError}
+    <form:errors path="fileInfoList" cssClass="error"></form:errors>
+    ${fileInfoListError}
 </form:form>
 </body>
 </html>

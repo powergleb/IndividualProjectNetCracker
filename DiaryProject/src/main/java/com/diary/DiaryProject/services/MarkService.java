@@ -8,7 +8,7 @@ import java.util.List;
 @Service
 public interface MarkService {
 
-    public Mark createMark(Mark mark);
+    public Mark createMark(Mark mark, int answerID);
 
     public Mark readMark(int id);
 

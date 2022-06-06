@@ -4,6 +4,7 @@ import com.diary.DiaryProject.dao.repositories.FileInfoRepository;
 import com.diary.DiaryProject.entities.Answer;
 import com.diary.DiaryProject.entities.FileInfo;
 import com.diary.DiaryProject.entities.Homework;
+import com.diary.DiaryProject.entities.intefaces.FileContainer;
 import com.diary.DiaryProject.services.AnswerService;
 import com.diary.DiaryProject.services.FileService;
 import com.diary.DiaryProject.util.FileManager;
@@ -44,16 +45,13 @@ public class FileServiceImpl implements FileService {
 
         return createdFile;
     }
-    public void updateFile(Homework homework){
+    @Override
+    public void updateFile(FileContainer homework){
         for (FileInfo fileInfo : homework.getFileInfoList()){
             fileInfo.setFileContainer(homework);
         }
     }
-    public void updateFile(Answer answer){
-        for (FileInfo fileInfo : answer.getFileInfoList()){
-            fileInfo.setFileContainer(answer);
-        }
-    }
+
     private String generateKey(String name) {
         return DigestUtils.md5Hex(name + LocalDateTime.now().toString());
     }

@@ -1,44 +1,32 @@
 package com.diary.DiaryProject.controller.Teacher;
 
-import com.diary.DiaryProject.entities.*;
-import com.diary.DiaryProject.services.UserService;
-import com.diary.DiaryProject.services.impl.AnswerServiceImpl;
-import com.diary.DiaryProject.services.impl.FileServiceImpl;
-import com.diary.DiaryProject.services.impl.GroupServiceImpl;
-import com.diary.DiaryProject.services.impl.HomeworkServiceImpl;
+import com.diary.DiaryProject.entities.Answer;
+import com.diary.DiaryProject.entities.Comment;
+import com.diary.DiaryProject.entities.FileInfo;
+import com.diary.DiaryProject.entities.Mark;
+import com.diary.DiaryProject.services.AnswerService;
+import com.diary.DiaryProject.services.FileService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import javax.validation.Valid;
 import java.io.IOException;
-import java.util.List;
-import java.util.stream.Collectors;
 
 @Controller
 public class AnswerTeacherController {
-    @Autowired
-    private HomeworkServiceImpl homeworkService;
-    @Autowired
-    private UserService userService;
+
 
     @Autowired
-    private GroupServiceImpl groupService;
-
+    private AnswerService answerService;
     @Autowired
-    private AnswerServiceImpl answerService;
-    @Autowired
-    FileServiceImpl fileService;
+    private FileService fileService;
 
 
     @RequestMapping(value = "/answerViewTeacher={id}", method = RequestMethod.GET)
@@ -51,15 +39,14 @@ public class AnswerTeacherController {
         model.addAttribute("studentSecondName", answer.getStudent().getSecondName());
         model.addAttribute("studentPatronymic", answer.getStudent().getPatronymic());
         model.addAttribute("answerFiles", answer.getFileInfoList());
-        if( answer.getMark() != null){
+        if (answer.getMark() != null) {
             model.addAttribute("mark", answer.getMark().getValue());
-        }else{
+        } else {
             model.addAttribute("mark", null);
         }
         model.addAttribute("markForm", new Mark());
         model.addAttribute("commentList", answer.getComments());
         model.addAttribute("commentForm", new Comment());
-
 
 
         model.addAttribute("idAnswer", id);

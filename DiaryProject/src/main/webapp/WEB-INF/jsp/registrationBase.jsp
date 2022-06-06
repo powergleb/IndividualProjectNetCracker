@@ -6,18 +6,19 @@
 <html>
 <head>
     <meta charset="utf-8">
+    <link href="<c:url value="/resources/css/style.css" />" rel="stylesheet">
     <title>Регистрация</title>
 </head>
 
 <body>
-<div>
+<h3>
     <a href="/registrationStudent">Зарегистрировать студента</a>
-</div>
-<div>
+</h3>
+<h3>
     <a href="/registrationTeacher">Зарегистрировать учителя</a>
-</div>
-<div>
+</h3>
+<h3>
     <a href="/">Главная</a>
-</div>
+</h3>
 </body>
 </html>

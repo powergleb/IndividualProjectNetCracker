@@ -10,6 +10,8 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
+    <link href="<c:url value="/resources/css/style.css" />" rel="stylesheet">
+    <link href="<c:url value="/resources/css/table.css" />" rel="stylesheet">
     <title>Title</title>
     <script type="text/javascript">
         function addCommentBtnClick() {
@@ -24,42 +26,60 @@
     </script>
 </head>
 <body>
-<c:out value="${date}" escapeXml="false"/>
-<c:out value="${text}" escapeXml="false"/>
-<c:out value="${studentName}" escapeXml="false"/>
-<c:out value="${studentSecondName}" escapeXml="false"/>
-<c:out value="${studentPatronymic}" escapeXml="false"/>
+<p>Дата выставления: <c:out value="${date}" escapeXml="false"/></p>
+<p>Текст задания: <c:out value="${text}" escapeXml="false"/></p>
+<p>ФИО ответившего: <c:out value="${studentName}" escapeXml="false"/>
+    <c:out value="${studentSecondName}" escapeXml="false"/>
+    <c:out value="${studentPatronymic}" escapeXml="false"/></p>
 
-<table>
-
-    <c:forEach var="file" items="${answerFiles}">
-    <tr onclick="window.location.href='/downloadAnswerFiles=${file.id}'; return false">
-        <td>${file.name}</td>
-    <tr>
-            <%--        <input type="button" value="скачать на ваш страх и риск" onclick="window.location.href='/downloadfiles=${file.id}'; return false">--%>
-        </c:forEach>
-</table>
-<c:if test="${mark != null}">
-    <c:out value="Оценка ${mark} баллов" escapeXml="false"/>
-</c:if>
-
-<c:if test="${commentList.size() != 0}">
-    <table style="border: 2px solid black;">
+<c:if test="${answerFiles.size() != 0}">
+    <table class="filetable">
+        <thead>
         <tr>
-            <th colspan="3">Комментарии</th>
+            <th>Вложения</th>
         </tr>
-        <tr>
-            <th>ФИО</th>
-            <th>Время ответа</th>
-            <th>Текст</th>
-        </tr>
-        <c:forEach var="comment" items="${commentList}">
-            <tr>
-                <td>${comment.user.name} ${comment.user.secondName} ${comment.user.patronymic}</td>
-                <td>${comment.date.getTime()}</td>
-                <td>${comment.commentText}</td>
+        </thead>
+        <tbody>
+
+        <c:forEach var="file" items="${answerFiles}">
+            <tr onclick="window.location.href='/downloadAnswerFiles=${file.id}'; return false">
+                <td>${file.name}</td>
             </tr>
         </c:forEach>
+        </tbody>
+    </table>
+</c:if>
+
+
+
+<p><c:if test="${mark != null}">
+    <c:out value="Оценка ${mark}" escapeXml="false"/>
+</c:if></p>
+
+<c:if test="${commentList.size() != 0}">
+    <h3>
+        Комментарии
+    </h3>
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Текст</th>
+            <th>ФИО</th>
+            <th>Время ответа</th>
+
+        </tr>
+        </thead>
+        <tbody>
+        <c:forEach var="comment" items="${commentList}">
+            <tr>
+                <td>${comment.commentText}</td>
+                <td>${comment.user.name} ${comment.user.secondName} ${comment.user.patronymic}</td>
+                <td>${comment.date.getTime()}</td>
+
+            </tr>
+        </c:forEach>
+        </tbody>
+
     </table>
 </c:if>
 <input type="button" value="Добавить комментарий" id=addCommentBtn name="button" onClick='addCommentBtnClick()'
@@ -71,7 +91,7 @@
 
         <form:textarea type="textarea" path="commentText" placeholder="Описание ответа"
                        autofocus="true"></form:textarea>
-        <form:errors path="commentText"></form:errors>
+        <form:errors path="commentText" cssClass="error"></form:errors>
             ${commentTextError}
     </div>
     <input type="submit" id=submitBtn value="Подтвердить"/>

@@ -11,6 +11,8 @@
 <html>
 <head>
     <title>Title</title>
+    <link href="<c:url value="/resources/css/style.css" />" rel="stylesheet">
+    <link href="<c:url value="/resources/css/table.css" />" rel="stylesheet">
     <script type="text/javascript">
 
         function addCommentBtnClick() {
@@ -22,42 +24,41 @@
             document.getElementById('formComment').style.display = 'none';
             document.getElementById('addCommentBtn').style.display = 'block';
         }
-
-        // function addMarkBtnClick() {
-        //     document.getElementById('markForm').style.display = 'block';
-        //     document.getElementById('addMarkBtn').style.display = 'none';
-        // }
-        //
-        // function cancelMarkBtnClick() {
-        //     document.getElementById('markForm').style.display = 'none';
-        //     document.getElementById('addMarkBtn').style.display = 'block';
-        // }
     </script>
 
 </head>
 <body>
-<c:out value="${date}" escapeXml="false"/>
-<c:out value="${text}" escapeXml="false"/>
-<c:out value="${studentName}" escapeXml="false"/>
-<c:out value="${studentSecondName}" escapeXml="false"/>
-<c:out value="${studentPatronymic}" escapeXml="false"/>
-<table>
+<p>Дата выставления: <c:out value="${date}" escapeXml="false"/></p>
+<p>Текст задания: <c:out value="${text}" escapeXml="false"/></p>
+<p>ФИО ответившего: <c:out value="${studentName}" escapeXml="false"/>
+    <c:out value="${studentSecondName}" escapeXml="false"/>
+    <c:out value="${studentPatronymic}" escapeXml="false"/></p>
 
-    <c:forEach var="file" items="${answerFiles}">
-    <tr onclick="window.location.href='/downloadAnswerFiles=${file.id}'; return false">
-        <td>${file.name}</td>
-    <tr>
-            <%--        <input type="button" value="скачать на ваш страх и риск" onclick="window.location.href='/downloadfiles=${file.id}'; return false">--%>
+
+<c:if test="${answerFiles.size() != 0}">
+    <table class="filetable">
+        <thead>
+        <tr>
+            <th>Вложения</th>
+        </tr>
+        </thead>
+        <tbody>
+
+        <c:forEach var="file" items="${answerFiles}">
+            <tr onclick="window.location.href='/downloadAnswerFiles=${file.id}'; return false">
+                <td>${file.name}</td>
+            </tr>
         </c:forEach>
-</table>
-
-
-
-<c:if test="${mark != null}">
-    <c:out value="Оценка ${mark}" escapeXml="false"/>
+        </tbody>
+    </table>
 </c:if>
+
+<p><c:if test="${mark != null}">
+    <c:out value="Оценка ${mark}" escapeXml="false"/>
+</c:if></p>
+
 <c:if test="${mark == null}">
-<%--    <input type="button" value="Оценить" id=addMarkBtn name="button" onClick='addMarkBtnClick()' style="display: block;"/>--%>
+    <%--    <input type="button" value="Оценить" id=addMarkBtn name="button" onClick='addMarkBtnClick()' style="display: block;"/>--%>
     <%--@elvariable id="markForm" type="com.diary.DiaryProject.entities.Mark"--%>
     <form:form id="markForm" action="createMarkTeacher=${idAnswer}" method="POST" modelAttribute="markForm"
                style="display: block;">
@@ -66,33 +67,41 @@
             <form:input type="number" path="value" placeholder="Оценка"
                         autofocus="true"></form:input>
             <div id="valueError">
-                <form:errors id="valueError" path="value"></form:errors>
+                <form:errors id="valueError" path="value" cssClass="error"></form:errors>
                     ${valueError}
             </div>
         </div>
         <input type="submit" id=submitBtn value="Подтвердить"/>
-<%--        <input type="button" value="Отменить" id=cancelMarkBtn onClick='cancelMarkBtnClick()'/>--%>
+        <%--        <input type="button" value="Отменить" id=cancelMarkBtn onClick='cancelMarkBtnClick()'/>--%>
     </form:form>
 </c:if>
 <c:if test="${commentList.size() != 0}">
-    <table style="border: 2px solid black;">
+    <h3>
+        Комментарии
+    </h3>
+    <table class="table">
+        <thead>
         <tr>
-            <th colspan="3">Комментарии</th>
-        </tr>
-        <tr>
-            <th></th>
-            <th>Время ответа</th>
             <th>Текст</th>
+            <th>ФИО</th>
+            <th>Время ответа</th>
+
         </tr>
+        </thead>
+        <tbody>
         <c:forEach var="comment" items="${commentList}">
             <tr>
+                <td>${comment.commentText}</td>
                 <td>${comment.user.name} ${comment.user.secondName} ${comment.user.patronymic}</td>
                 <td>${comment.date.getTime()}</td>
-                <td>${comment.commentText}</td>
+
             </tr>
         </c:forEach>
+        </tbody>
+
     </table>
 </c:if>
+<c:out value="${commentTextError}" escapeXml="false"/>
 <input type="button" value="Добавить комментарий" id=addCommentBtn name="button" onClick='addCommentBtnClick()'
        style="display: block;"/>
 <%--@elvariable id="commentForm" type="com.diary.DiaryProject.entities.Comment"--%>
@@ -100,9 +109,9 @@
            style="display: none;">
     <div>
 
-        <form:textarea type="textarea" path="commentText" placeholder="Описание ответа"
+        <form:textarea type="textarea" path="commentText" placeholder="Текст комментария"
                        autofocus="true"></form:textarea>
-        <form:errors path="commentText"></form:errors>
+        <form:errors path="commentText" cssClass="error"></form:errors>
             ${commentTextError}
     </div>
     <input type="submit" id=submitBtn value="Подтвердить"/>

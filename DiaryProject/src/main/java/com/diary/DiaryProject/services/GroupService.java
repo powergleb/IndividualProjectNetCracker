@@ -18,4 +18,5 @@ public interface GroupService {
 
     public List<Group> readAllGroup();
 
+    public List<Group> readGroupsForTeacher();
 }
